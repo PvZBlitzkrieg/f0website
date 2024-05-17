@@ -27,7 +27,14 @@
             var va=getQueryString(url_string)
             var link=""
             for (i = 0; i < va.length; i++) { 
-                link += String.fromCharCode(0x7e-va.charCodeAt(i)+0x20);
+                if (va[i]=="%"){
+                    link += String.fromCharCode(0x7e-parseInt(va[i+1]+va[i+2],16)+0x21);
+                    console.log(parseInt(va[i+1]+va[i+2],16))
+                    i=i+2
+                } else {
+                    link += String.fromCharCode(0x7e-va.charCodeAt(i)+0x21);
+                    console.log(va[i])
+                }
             }
             if (link!=""){
                 inn1.innerHTML="你所要访问的链接为: "
@@ -40,13 +47,11 @@
         function getQueryString(url_string) {
             var params1 = url_string.split('?');
             var param=""
-            console.log(params1.length)
             for (i = 1; i < params1.length; i++) {
                 param=param+params1[i]
                 if (i!=params1.length-1){
                     param=param+"?"
                 }
-                console.log(params1[i])
             }
             return param;
         }
