@@ -5,13 +5,47 @@
         <meta http-equiv="X-UA-compatible" content="IE=edge">
         <title>Xbork</title>
         <link rel="shortcut icon" href="fav.ico" type="image/x-icon">
+        <script>
+            function checklink(){
+                var keyValues1 = {};   /* 声明空的键值对 */
+                keyValues1["a"] = "z";
+                keyValues1["b"] = "y";
+                keyValues1["c"] = "x";
+                var in1=document.getElementById("inn1")
+                var in2=document.getElementById("inn2")
+                var check=document.getElementById("inn")
+                var url_string = window.location.href
+                var name="t"
+                var va=getQueryString(url_string,name)
+                var link=""
+                for (i = 0; i < va.length; i++) { 
+                    link += String.fromCharCode(0x7e-va.charCodeAt(i)+0x20);
+                }
+                if (link!=""){
+                    inn1.innerHTML="你所要访问的链接为: "
+                    check.innerHTML=link +"\r"
+                    check.href=link
+                    inn2.innerHTML="注:链接由用户提供,与网站无关,请谨慎辨别后访问"
+                }
+            }
+
+            function getQueryString(url_string,name) {
+                var params = url_string.split('?t=')[1]; // 获取?号后面的参数 name=mick&age=20
+                return params;
+            }
+
+        </script>
     </head>
     <body>
-        <small><a href="https://space.bilibili.com/1808001068">点击关注b站账号:uid1808001068</a></small><br>
-        <div a><font size="60">PublicData</font><br></div>
-        <font size="10">
-            这是一个正在开发的ELF解析软件。<br>
-        <a href="https://www.123pan.com/s/rSXuVv-fRGxh">点击下载</a>
-        </font>
+        <p id="checkview">
+            <font size="6"><a id="inn1"></a></font>
+            <font size="6"><a id="inn" href=""></a></font>
+            <font size="6"><a id="inn2"></a></font>
+        </p>
+        <small><a href="javascript:checklink();" οnclick=javascript:checklink()>检测链接</a><br></small>
+        <a href="https://space.bilibili.com/1808001068">点击关注b站账号</a><br>
+        <B><font size="7"><font color=#f00>PublicData</font></B>
+        <font size="5"><br>这是一个正在开发的ELF解析软件。</font>
+        <font size="6"><br><a href="https://www.123pan.com/s/rSXuVv-fRGxh">点击下载</a></font>
     </body>
 </html>
