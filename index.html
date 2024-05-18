@@ -58,6 +58,8 @@
                     } else if(va[i]=="_") {
                         link += ":"
                     } else if(va[i]=="@") {
+                        link += "."
+                    } else if(va[i]==".") {
                         link += "@"
                     } else {
                         link+= va[i]
