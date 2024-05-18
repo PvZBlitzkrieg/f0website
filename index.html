@@ -20,6 +20,9 @@
     </body>
     <script>
         function checklink(){
+            if (window.location.href.startsWith("https://")==false){
+                location.href = "https://"+window.location.href.substring(window.location.href.indexOf("//")+2,window.location.href.length)
+            }
             var inn1=document.getElementById("inn1")
             var check=document.getElementById("inn")
             var inn2=document.getElementById("inn2")
