@@ -42,11 +42,16 @@
             }
             if (link!=""){
                 inn1.innerHTML="你所要访问的链接为: "
+                if (link.startsWith("http")==false){
+                    location.href = window.location.href.split("?")[0]+"?"+link;
+                    alert("您的链接为:"+window.location.href.split("?")[0]+"?"+link)
+                } else{
+                    location.href = link;
+                }
                 check.innerHTML=link+"<br/>"
-                alert(link)
                 check.href=link
                 inn2.innerHTML="正在跳转...<br/>注:链接由用户提供,与网站无关,请谨慎访问<br/><br/><br/><br/>----------------------------------------------------------------<br/>----------------------------------------------------------------<br/><br/><br/><br/>"
-                //location.href = link;
+
             }
         }
 
