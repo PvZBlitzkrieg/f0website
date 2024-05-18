@@ -31,35 +31,40 @@
             var va=getQueryString(url_string)
             var link=""
             var temp=0
-            for (i = 0; i < va.length; i++) { 
-                if (va[i]=="%"){
-                    temp=parseInt(va[i+1]+va[i+2],16)
-                    //console.log(parseInt(va[i+1]+va[i+2],16))
-                    i=i+2
-                } else {
-                    temp=va.charCodeAt(i)
-                    //console.log(va[i])
-                }
-                if (temp>=0x30&&temp<=0x39){
-                    link += String.fromCharCode(0x39-temp+0x30);
-                } else if (temp>=0x41&&temp<=0x5a){
-                    link += String.fromCharCode(0x5a-temp+0x41);
-                } else if (temp>=0x61&&temp<0x7b){
-                    link += String.fromCharCode(0x7a-temp+0x61);
-                } else if(va[i]=="/") {
-                    link += "?"
-                } else if(va[i]=="?") {
-                    link += "/"
-                } else if(va[i]==":") {
-                    link += "_"
-                } else if(va[i]=="_") {
-                    link += ":"
-                } else if(va[i]=="@") {
-                    link += "@"
-                } else {
-                    link+= va[i]
+            if (va.startsWith("h")||va.startsWith("s")){
+                for (i = 0; i < va.length; i++) { 
+                        if (va[i]=="%"){
+                        temp=parseInt(va[i+1]+va[i+2],16)
+                        //console.log(parseInt(va[i+1]+va[i+2],16))
+                        i=i+2
+                    } else {
+                        temp=va.charCodeAt(i)
+                        //console.log(va[i])
+                    }
+                    if (temp>=0x30&&temp<=0x39){
+                        link += String.fromCharCode(0x39-temp+0x41);
+                    } else if (temp>=0x41&&temp<=0x4a){
+                        link += String.fromCharCode(0x4a-temp+0x30);
+                    } else if (temp>=0x4b&&temp<=0x5a){
+                        link += String.fromCharCode(0x5a-temp+0x4b);
+                    } else if (temp>=0x61&&temp<0x7b){
+                        link += String.fromCharCode(0x7a-temp+0x61);
+                    } else if(va[i]=="/") {
+                        link += "?"
+                    } else if(va[i]=="?") {
+                        link += "/"
+                    } else if(va[i]==":") {
+                        link += "_"
+                    } else if(va[i]=="_") {
+                        link += ":"
+                    } else if(va[i]=="@") {
+                        link += "@"
+                    } else {
+                        link+= va[i]
+                    }
                 }
             }
+            
             if (link!=""){
                 inn1.innerHTML="你所要访问的链接为: "
                 if (link.startsWith("http")==false){
