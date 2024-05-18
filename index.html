@@ -20,10 +20,11 @@
     </body>
     <script>
         function checklink(){
-            if (window.location.href.startsWith("https://")==false){
-                location.href = "https://"+window.location.href.substring(window.location.href.indexOf("//")+2,window.location.href.length)
-            }
             var inn1=document.getElementById("inn1")
+            if (window.location.href.startsWith("https://")==false){
+                inn1.innerHTML="正在跳转至https..."
+                //location.href = "https://"+window.location.href.substring(window.location.href.indexOf("//")+2,window.location.href.length)
+            }
             var check=document.getElementById("inn")
             var inn2=document.getElementById("inn2")
             var url_string = window.location.href
@@ -31,30 +32,34 @@
             var link=""
             for (i = 0; i < va.length; i++) { 
                 if (va[i]=="%"){
-                    link += String.fromCharCode(0x7e-parseInt(va[i+1]+va[i+2],16)+0x21);
-                    console.log(parseInt(va[i+1]+va[i+2],16))
+                    link += String.fromCharCode(0x7e-parseInt(va[i+1]+va[i+2],16)+0x29);
+                    //console.log(parseInt(va[i+1]+va[i+2],16))
                     i=i+2
                 } else {
-                    link += String.fromCharCode(0x7e-va.charCodeAt(i)+0x21);
-                    console.log(va[i])
+                    link += String.fromCharCode(0x7e-va.charCodeAt(i)+0x29);
+                    //console.log(va[i])
                 }
             }
             if (link!=""){
                 inn1.innerHTML="你所要访问的链接为: "
                 check.innerHTML=link+"<br/>"
+                alert(link)
                 check.href=link
                 inn2.innerHTML="正在跳转...<br/>注:链接由用户提供,与网站无关,请谨慎访问<br/><br/><br/><br/>----------------------------------------------------------------<br/>----------------------------------------------------------------<br/><br/><br/><br/>"
-                location.href = link;
+                //location.href = link;
             }
         }
 
         function getQueryString(url_string) {
-            var params1 = url_string.split('?');
             var param=""
-            for (i = 1; i < params1.length; i++) {
-                param=param+params1[i]
-                if (i!=params1.length-1){
-                    param=param+"?"
+            var read=false
+            for (i = 1; i < url_string.length; i++) {
+                if (url_string[i]=="?"&&read==false){
+                    read=true
+                    console.log(true)
+                } else if (read==true){
+                    param=param+url_string[i]
+                    console.log(url_string[i])
                 }
             }
             return param;
