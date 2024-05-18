@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-compatible" content="IE=edge">
+        <title>Xbork</title>
+        <link rel="shortcut icon" href="fav.ico" type="image/x-icon">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                list-style: none;
+            }
+            .header,.nav,.container,.footer{
+                float: left;
+                width : 100%
+                }
+            .header{
+                background: #ddd;
+                padding: 40px;
+                text-align: center;
+            }
+            .nav{
+                background: #666;
+            }
+            .nav a{
+                color: #fff;
+                padding: 10px,20px;
+                display: inline-block;
+            }
+            .nav a:hover{
+                background: #bbb;
+                color:#000
+            }
+            @font-face {
+                font-family: "Bitstream Vera Serif Bold";
+                src: url("../fonts/アプリ明朝.ttf");
+            }
+            body {
+                font-family: "Bitstream Vera Serif Bold", serif;
+            }
+        </style>
+        
+        <script>
+            function clickbk(){
+                var mt=document.getElementById("mt")
+                mt.style.display="none";
+                var mr=document.getElementById("mr")
+                mr.style.display="block";
+            }
+            function clicked(){
+                var mt=document.getElementById("mt")
+                mt.style.display="block";
+                var mr=document.getElementById("mr")
+                mr.style.display="none";
+            }
+        </script>
+    </head>
+    <body>
+            <div class="main">
+                <div class="header">
+                    <font size="20">
+                    <h1>Xbork</h1>
+                    </font>
+                </div>
+                <font size="5">
+                <div class="nav">
+                    <h2>
+                        <a href="javascript:void(0);" onclick="clicked()">TWEditer</a>
+                        <a href="https://pvzblitzkrieg.github.io/">PvZNr</a>
+                        <a href="https://www.123pan.com/s/rSXuVv-fRGxh">PvZBk</a>
+                        <a href="javascript:void(0);" onclick="clickbk()">BKMgr</a>
+                        <a href="#">其它</a>
+                    </h2>
+                </div>
+                <div class="main">
+                    <p id="mt">
+                        基于Android的ThreeWaston运行程序:TWEditer<br>
+                        <a href="https://www.123pan.com/s/rSXuVv-MRGxh">下载</a><br>
+                        能够运行所有位于"/storage/emulated/0/bk/p/任意不以.开头的文件/.bkt"的文件<br>
+                        按照路径的形式加载运行过程中产生的非临时的Object对象<br>
+                        在不依赖APK生成的基础上直接执行<br>
+                        <b>说明</b>:<br>
+                        默认识别为文本<br>
+                        在一般情况下,使用"."代表下一级目录<br>
+                        使用"<font color="#f00">(</font>" "<font color="#f00">)</font>"代表以方法运行,并将结果添加到返回值中<br>
+                        使用"<font color="#f00">Enter</font>"清空返回值<br>
+                        使用"<font color="#f00">></font>"进行单个字符的忽略<br>
+                        使用"<font color="#f00">\</font>"将下一个字符视作文本<br>
+                        使用"<font color="#f00">#</font>"表达一个值,函数或路径对象<small>在调用时参数一不得为集合</small><br>
+                        使用"<font color="#f00">{</font>" "<font color="#f00">}</font>"将代码忽略并连同关键字加载在指定路径的方法中<br>
+                        <br>
+                        <br>
+                        <b>作者账号&交流群:</b><br>
+                        <small>
+                            <b>bilibili:</b><a href="https://space.bilibili.com/1808001068">PvZBlitzKrieg</a> 
+                            <a href="https://space.bilibili.com/660858779">Nudervous</a> 
+                            <a href="https://space.bilibili.com/1481363522">Tibare</a> 
+                            <a href="https://space.bilibili.com/2057071940">Xborks</a><br>
+                            <b>QQ群:</b><a href="http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=mLgtkX9QBElzI7g4Oe0lClGRyWp-g3nb&authKey=8yTmp8iMmffNW4%2BiSKHzMXmc84Ocec1UU0GR6fmsdXyLi03Tf62eSqTmseYW%2FZ1L&noverify=0&group_code=770244447">770244447</a><br>
+                            <b>YouTube:</b><a href="https://www.youtube.com/channel/UCmGbrwsZUrxuN7Q0LL16ATg">PvZBlitzKrieg</a><br>
+                            <b>抖音:</b><a href="https://www.douyin.com/user/MS4wLjABAAAApOwQvdrQuttTl4OEUgr41oqsudULH9-0u_b_hWT0ZVE">PvZBlitzKrieg</a><br>
+                            <b>Telegram:</b>Xbork Waston<br>
+                        </small>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+                    </p>
+                    <p id="mr" style="display: none;">
+                        基于Android的ELF结构解析器:BKMgr<br>
+                        <a href="https://www.123pan.com/s/rSXuVv-fRGxh">下载</a>
+                    </p>
+                </div>
+                </font>
+            </div>
+    </body>
+</html>
