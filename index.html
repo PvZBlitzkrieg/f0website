@@ -15,7 +15,7 @@ html,body{
 	margin:0px;
 	width:100%;
 	height:100%;
-    background:#000;
+    background:#00000000;
 	font-family: 'HANDotum', sans-serif;
 }
 
@@ -72,7 +72,7 @@ html,body{
 	
 
 	
-	<div><canvas id="canvas" style="position:absolute;top:0;left:0;z-index:1;position:fixed;"></canvas></div>
+	<div><canvas id="canvas" style="position:absolute;top:0;left:0;z-index:-1;position:fixed;"></canvas></div>
 	
 	<script>
 		function project3D(x,y,z,vars){
@@ -341,7 +341,7 @@ html,body{
 		<font size="8"><a id="inn" href=""></a></font>
 		<font size="6"><a id="inn2"></a></font>
 	</p>
-	<p style="position:absolute;z-index:999;background-color:rgba(255, 255, 255, 0.7);border-radius: 10px 10px 10px 10px;margin:auto;left:100px;right:100px;top:350px;">
+	<p style="background-color:rgba(255, 255, 255, 0.7);border-radius: 10px 10px 10px 10px;margin-left:100px;margin-right:100px;margin-top:100px;">
 		<p1>
             <br>
 			<p2>
@@ -446,12 +446,34 @@ html,body{
     <small><a>1.素早い操作をサポート</a><br>
         <a>2.ファイル名を色分けして表示</a><br>
         </small>
+		
     </p4>
+	<div id="container" style="margin-left:100px;margin-right:100px;margin-top:100px;"></div>
+        <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+        <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+        <script>
+        var gitment = new Gitment({
+          id: 'PublicData', // 可选。默认为 location.href
+          owner: 'PvZBlitzkrieg',
+          repo: 'f0website',
+          oauth: {
+            client_id: 'Ov23liuQk8xkBJj1Hp7I',
+            client_secret: 'bee3dd9b9fe83f8d1bbc0431cbc90645e4c0dcf0',
+          },
+        })
+        gitment.render('container')
+        </script>
+	
 </p1>
+
 <aa>
     <br><br><br><br><br>
 </aa>
+
 	</p>
+	<p12 style="position:absolute;z-index: 9999999;bottom:0;right:0;">
+		
+	</p12>
 	<p style="position:relative;">
 		<br>
 		<br>
@@ -483,9 +505,9 @@ html,body{
 	function checklink(){
 		var inn1=document.getElementById("inn1")
 		if (window.location.href.startsWith("https://")==false){
-			inn1.innerHTML="正在跳转至https..."
-            if (window.location.href.startsWith("file:///")==false){
-			    location.href = "https://"+window.location.href.substring(window.location.href.indexOf("//")+2,window.location.href.length)
+            if (window.location.href.startsWith("file:///")==false&&window.location.href.startsWith("223")==false&&window.location.href.startsWith("http://223")==false){
+			    inn1.innerHTML="正在跳转至https..."
+				location.href = "https://"+window.location.href.substring(window.location.href.indexOf("//")+2,window.location.href.length)
             }
 		}
 		var check=document.getElementById("inn")
