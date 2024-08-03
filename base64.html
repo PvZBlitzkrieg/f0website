@@ -33,6 +33,9 @@
                 background: #bbb;
                 color:#000
             }
+            .box {
+            }
+            
             @font-face {
                 font-family: "Bitstream Vera Serif Bold";
                 src: url("http://ftp.ktug.org/KTUG/hcr-lvt/HANDotumB-LVT.ttf");
@@ -41,7 +44,7 @@
                 font-family: "Bitstream Vera Serif Bold", serif;
             }
         </style>
-        
+        <script src="js/base64.min.js">//md5</script>
         <script>
             function clickbk(){
                 var mt=document.getElementById("mt")
@@ -55,77 +58,30 @@
                 var mr=document.getElementById("mr")
                 mr.style.display="none";
             }
-            const XOR_CODE = 23442827791579n;
-            const MASK_CODE = 2251799813685247n;
-            const MAX_AID = 1n << 51n;
-            const BASE = 58n;
-            
-            const data = 'FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf';
-            
-            function av2bv(aid) {
-              const bytes = ['B', 'V', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
-              let bvIndex = bytes.length - 1;
-              let tmp = (MAX_AID | BigInt(aid)) ^ XOR_CODE;
-              while (tmp > 0) {
-                bytes[bvIndex] = data[Number(tmp % BigInt(BASE))];
-                tmp = tmp / BASE;
-                bvIndex -= 1;
-              }
-              [bytes[3], bytes[9]] = [bytes[9], bytes[3]];
-              [bytes[4], bytes[7]] = [bytes[7], bytes[4]];
-              return bytes.join('');
-            }
-
-            function bv2av(bvid) {
-              const bvidArr = Array.from(bvid);
-              [bvidArr[3], bvidArr[9]] = [bvidArr[9], bvidArr[3]];
-              [bvidArr[4], bvidArr[7]] = [bvidArr[7], bvidArr[4]];
-              bvidArr.splice(0, 3);
-              const tmp = bvidArr.reduce((pre, bvidChar) => pre * BASE + BigInt(data.indexOf(bvidChar)), 0n);
-              return Number((tmp & MASK_CODE) ^ XOR_CODE);
-            }
-            
-            var xorn=177451812;
-            var add=8728348608;
-            var s=[11,10,3,8,4,6];
-            const TABLE=['f','Z','o','d','R','9','X','Q','D','S','U','m','2','1','y','C','k','r','6','z','B','q','i','v','e','Y','a','h','8','b','t','4','x','s','W','p','H','n','J','E','7','j','L','5','V','G','3','g','u','M','T','K','N','P','A','w','c','F'];
-            var tr=new Array(123);
-            function enc(x) {
-              x=(x^xorn)+add;
-              var r=['B','V','1',' ',' ','4',' ','1',' ','7',' ',' '];
-              for (var i = 0; i < r.length; i++) {
-                r[s[i]]=TABLE[Math.floor(x/Math.pow(58, i))%58]
-              }
-              var ret="";
-              for (var i = 0; i < r.length; i++) {
-                ret+=r[i];
-              }
-              return ret;
-            }
-            function dec(x) {
-              for (var i = 0; i < 58; i++) {
-                tr[TABLE[i]] = i;
-              }
-              var r=0;
-              for(var i = 0; i < 6; i++) {
-                r+=(Math.pow(58, i)*tr[x[s[i]]]);
-              }
-              return (r-add)^xorn;
-            }
-            function abc(x) {
+            function abc(x,ay) {
               inp=document.getElementById("ipc");
+              opt=document.getElementById("opt");
+              spit=location.href.split("?")
               if (x=="2") {
-                txt=location.href.split("?")[1]
+                txt=spit[1].replace("\\\\","\\").replace("\\m","?")
+                inp.value=txt
+                if (ay=="1"||spit[spit.length-1]=="1") {
+                    opt.value=Base64.encode(txt)
+                } else {
+                    opt.value=Base64.decode(txt)
+                }
               } else {
                 txt=inp.value.toString();
-                location.href = location.href.split("?")[0]+"?"+inp.value
+                location.href = spit[0]+"?"+inp.value.replace("\\","\\\\").replace("?","\\m")+"?"+ay
               }
-              if (txt.startsWith("BV")) {
-                inp.value="av"+bv2av(txt);
-              } else {
-                inp.value=av2bv(txt.replace("av",""));
-              }
-              //alert(inp);
+            }
+            function tmp() {
+                inp=document.getElementById("ipc");
+                opt=document.getElementById("opt");
+                inp.value=opt.value
+            }
+            function dmt() {
+                inp=document.getElementById("ipc").value="";
             }
         </script>
     </head>
@@ -153,9 +109,9 @@
         return false;
       }
       //绑定鼠标左键
-      $("body").click(addTips);
+      //$("body").click(addTips);
       //绑定鼠标左键
-      $("body").bind("contextmenu",addTips)
+      //$("body").bind("contextmenu",addTips)
   });
     </script>
     <script>
@@ -254,16 +210,22 @@
 
             <div class="main">
                 <div class="header">
-                    <font size="20">
-                    <h1>Xbork</h1>
+                    <font size="20" color="#000">
+                        <a href="http://0h.fit">
+                            <h1>Xbork</h1>
+                        </a>
                     </font>
                 </div>
                 <B><font size="10">
-                  bv2av
+                  Base64编解码
                 </font></br></B>
                 <font size="5">
-                <input type="text" id="ipc" placeholder="輸入bv或av" onkeydown="if(event.keyCode==13) {abc()};" autofocus>
-                <button type="submit" onclick="abc(1);">轉換</button>
+                    &emsp;<textarea cols="100" rows="10" id="ipc" placeholder="輸入内容" autofocus></textarea>
+                <button type="submit" onclick="abc(1,1);" style="width: 75px; height: 45px;">编码为Base64</button>
+                <button type="submit" onclick="abc(1,2);" style="width: 75px; height: 45px;">解码</button>
+                <button type="submit" onclick="dmt(1,2);" style="width: 75px; height: 45px;">清空</button><br>
+                &emsp;<textarea cols="100" rows="10" id="opt" placeholder="結果"></textarea>
+                <button type="submit" onclick="tmp(1,2);" style="width: 75px; height: 75px;">&emsp;&emsp;⬆&emsp;&emsp;</button>
                 </font>
             </div>
     </body>

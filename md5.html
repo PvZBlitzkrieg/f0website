@@ -287,19 +287,21 @@
 
             <div class="main">
                 <div class="header">
-                    <font size="20">
-                    <h1>Xbork</h1>
+                    <font size="20" color="#000">
+                        <a href="http://0h.fit">
+                            <h1>Xbork</h1>
+                        </a>
                     </font>
                 </div>
                 <B><font size="10">
                   md5計算
                 </font></br></B>
                 <font size="5">
-                <input type="text" id="ipc" placeholder="輸入md5" onkeydown="if(event.keyCode==13) {abc()};" autofocus>
+                  &ensp;<textarea cols="50" rows="5" id="ipc" placeholder="輸入md5" onkeydown="if(event.keyCode==13) {abc()};" autofocus></textarea>
                 <button type="submit" onclick="abc(1);">轉換</button>
                 <input type="file" name="file" id="file" onchange="abc(3)">
                 <font size="3">(文件自动转换)</font></br>
-                <input type="text" id="opt" placeholder="結果">
+                &ensp;<textarea cols="50" rows="5" id="opt" placeholder="結果"></textarea>
                 </font>
             </div>
     </body>
