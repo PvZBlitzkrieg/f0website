@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-compatible" content="IE=edge">
+        <title>Xbork</title>
+        <link rel="shortcut icon" href="fav.ico" type="image/x-icon">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                list-style: none;
+            }
+            .header,.nav,.container,.footer{
+                float: left;
+                width : 100%
+                }
+            .header{
+                background: #ddd;
+                padding: 40px;
+                text-align: center;
+            }
+            .nav{
+                background: #666;
+            }
+            .nav a{
+                color: #fff;
+                padding: 10px,20px;
+                display: inline-block;
+            }
+            .nav a:hover{
+                background: #bbb;
+                color:#000
+            }
+            @font-face {
+                font-family: "Bitstream Vera Serif Bold";
+                src: url("http://ftp.ktug.org/KTUG/hcr-lvt/HANDotumB-LVT.ttf");
+            }
+            body {
+                font-family: "Bitstream Vera Serif Bold", serif;
+            }
+        </style>
+        <script  src="js/md5.js">
+            //md5
+        </script>
+        <script src="js/spark-md5.min.js">//md5</script>
+        <script>
+            function clickbk(){
+                var mt=document.getElementById("mt")
+                mt.style.display="none";
+                var mr=document.getElementById("mr")
+                mr.style.display="block";
+            }
+            function clicked(){
+                var mt=document.getElementById("mt")
+                mt.style.display="block";
+                var mr=document.getElementById("mr")
+                mr.style.display="none";
+            }
+            const XOR_CODE = 23442827791579n;
+            const MASK_CODE = 2251799813685247n;
+            const MAX_AID = 1n << 51n;
+            const BASE = 58n;
+            
+            const data = 'FcwAPNKTMug3GV5Lj7EJnHpWsx4tb8haYeviqBz6rkCy12mUSDQX9RdoZf';
+            
+            function av2bv(aid) {
+              const bytes = ['B', 'V', '1', '0', '0', '0', '0', '0', '0', '0', '0', '0'];
+              let bvIndex = bytes.length - 1;
+              let tmp = (MAX_AID | BigInt(aid)) ^ XOR_CODE;
+              while (tmp > 0) {
+                bytes[bvIndex] = data[Number(tmp % BigInt(BASE))];
+                tmp = tmp / BASE;
+                bvIndex -= 1;
+              }
+              [bytes[3], bytes[9]] = [bytes[9], bytes[3]];
+              [bytes[4], bytes[7]] = [bytes[7], bytes[4]];
+              return bytes.join('');
+            }
+
+            function bv2av(bvid) {
+              const bvidArr = Array.from(bvid);
+              [bvidArr[3], bvidArr[9]] = [bvidArr[9], bvidArr[3]];
+              [bvidArr[4], bvidArr[7]] = [bvidArr[7], bvidArr[4]];
+              bvidArr.splice(0, 3);
+              const tmp = bvidArr.reduce((pre, bvidChar) => pre * BASE + BigInt(data.indexOf(bvidChar)), 0n);
+              return Number((tmp & MASK_CODE) ^ XOR_CODE);
+            }
+            
+            var xorn=177451812;
+            var add=8728348608;
+            var s=[11,10,3,8,4,6];
+            const TABLE=['f','Z','o','d','R','9','X','Q','D','S','U','m','2','1','y','C','k','r','6','z','B','q','i','v','e','Y','a','h','8','b','t','4','x','s','W','p','H','n','J','E','7','j','L','5','V','G','3','g','u','M','T','K','N','P','A','w','c','F'];
+            var tr=new Array(123);
+            function enc(x) {
+              x=(x^xorn)+add;
+              var r=['B','V','1',' ',' ','4',' ','1',' ','7',' ',' '];
+              for (var i = 0; i < r.length; i++) {
+                r[s[i]]=TABLE[Math.floor(x/Math.pow(58, i))%58]
+              }
+              var ret="";
+              for (var i = 0; i < r.length; i++) {
+                ret+=r[i];
+              }
+              return ret;
+            }
+            function dec(x) {
+              for (var i = 0; i < 58; i++) {
+                tr[TABLE[i]] = i;
+              }
+              var r=0;
+              for(var i = 0; i < 6; i++) {
+                r+=(Math.pow(58, i)*tr[x[s[i]]]);
+              }
+              return (r-add)^xorn;
+            }
+            function abc(x) {
+              inp=document.getElementById("ipc");
+              opt=document.getElementById("opt");
+              if (x=="2") {
+                txt=location.href.split("?")[1]
+                inp.value=txt
+              } else if (x=="3") {
+                document.querySelector('#file').addEventListener('change', e => {
+                const file = e.target.files[0];
+                const fileReader = new FileReader()
+                fileReader.readAsBinaryString(file);
+                fileReader.onload = e => {
+                    const md5 = SparkMD5.hashBinary(e.target.result);
+                    opt.value=md5;
+                }
+                });
+              } else if (x=="4") {
+                document.querySelector('#file').addEventListener('change', e => {
+                const file = e.target.files[0];
+                const sliceLength = 10;
+                const chunkSize = Math.ceil(file.size / sliceLength);
+                const fileReader = new FileReader();
+                const md5 = new SparkMD5();
+                let index = 0;
+                const loadFile = () => {
+                    const slice = file.slice(index, index + chunkSize);
+                    fileReader.readAsBinaryString(slice);
+                }
+                loadFile();
+                fileReader.onload = e => {
+                    md5.appendBinary(e.target.result);
+                    if (index < file.size) {
+                    index += chunkSize;
+                    loadFile();
+                    } else {
+                    console.log(md5.end());
+                    }
+                };
+                });
+              } else {
+                txt=inp.value.toString();
+                location.href = location.href.split("?")[0]+"?"+inp.value
+              }
+              opt.value=md5(txt)
+            }
+        </script>
+    </head>
+    <body>
+        <script src="js/jquery.min.js"></script>
+    <script >
+    var a_idx=0;
+    jQuery(document).ready(function($){
+      addTips = function(e){
+        var a= new Array("");
+        var i=$("<span />").text(a[a_idx]);
+        a_idx=(a_idx+1)%a.length;
+        var x=e.pageX,y=e.pageY;
+        i.css({
+          "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+          "top":y-20,
+          "left":x,
+          "position":"absolute",
+          "font-weight":"bold",
+          "color":"#ff6651"
+        });
+ 
+        $("body").append(i);
+        i.animate({"top": y-180,"opacity":0},1500,function(){i.remove()})
+        return false;
+      }
+      //绑定鼠标左键
+      //$("body").click(addTips);
+      //绑定鼠标左键
+      //$("body").bind("contextmenu",addTips)
+  });
+    </script>
+    <script>
+      function o(w,v,i){
+          return w.getAttribute(v)||i
+      }
+      function j(i){
+          return document.getElementsByTagName(i)
+      }
+      function l(){
+          var i=j("script"),w=i.length,v=i[w-1];
+          return {l:w,z:o(v,"zIndex",-1),o:o(v,"opacity",0.5),c:o(v,"color","0,0,0"),n:o(v,"count",99)}
+      }
+      function k(){
+          r=u.width=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,
+          n=u.height=window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight
+      }
+      function b(){
+          e.clearRect(0,0,r,n);
+          var w=[f].concat(t);
+          var x,v,A,B,z,y;
+          t.forEach(function(i){
+              i.x+=i.xa,
+              i.y+=i.ya,
+              i.xa*=i.x>r||i.x<0?-1:1,
+              i.ya*=i.y>n||i.y<0?-1:1,
+              e.fillRect(i.x-0.5,i.y-0.5,1,1);
+              for(v=0;v<w.length;v++){
+                  x=w[v];
+                  if(i!==x&&null!==x.x&&null!==x.y){
+                      B=i.x-x.x,z=i.y-x.y,y=B*B+z*z;
+                      y<x.max&&(x===f&&y>=x.max/2&&(i.x-=0.03*B,i.y-=0.03*z),A=(x.max-y)/x.max,e.beginPath(),e.lineWidth=A/2,e.strokeStyle="rgba("+s.c+","+(A+0.2)+")",e.moveTo(i.x,i.y),e.lineTo(x.x,x.y),e.stroke())
+                  }
+              }
+              w.splice(w.indexOf(i),1)
+          }),m(b)
+      }
+      var u=document.createElement("canvas"),s=l(),c="c_n"+s.l,e=u.getContext("2d"),r,n,
+      m=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(i){
+          window.setTimeout(i,1000/45)
+      },
+      a=Math.random,f={x:null,y:null,max:20000};
+      u.className="particle_canvas";
+      var browserName = navigator.userAgent.toLowerCase();
+      if (/msie/i.test(browserName) && !/opera/.test(browserName)) {
+          u.className += ' ie10_gte';
+      };
+      u.id=c;
+      u.style.cssText="position:fixed;top:0;left:0;z-index:"+s.z+";opacity:"+s.o;
+      j("body")[0].appendChild(u);
+      k(),window.onresize=k;
+      window.onmousemove=function(i){
+          i=i||window.event,
+          f.x=i.clientX,
+          f.y=i.clientY
+      },
+      window.onmouseout=function(){
+          f.x=null,
+          f.y=null
+      };
+      for(var t=[],p=0;s.n>p;p++){
+          var h=a()*r,
+          g=a()*n,
+          q=2*a()-1,
+          d=2*a()-1;
+          t.push({x:h,y:g,xa:q,ya:d,max:6000})
+      }
+      setTimeout(function(){b()},100)
+    </script>
+    <style>
+  .github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+  }
+  @keyframes octocat-wave {
+    0%, 100% {
+      transform: rotate(0)
+    }
+    20%, 60% {
+      transform: rotate(-25deg)
+    }
+    40%, 80% {
+      transform: rotate(10deg)
+    }
+  }
+  @media (max-width:500px) {
+    .github-corner:hover .octo-arm {
+      animation: none
+    }
+    .github-corner .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+  }
+</style>
+
+
+
+            <div class="main">
+                <div class="header">
+                    <font size="20">
+                    <h1>Xbork</h1>
+                    </font>
+                </div>
+                <B><font size="10">
+                  md5計算
+                </font></br></B>
+                <font size="5">
+                <input type="text" id="ipc" placeholder="輸入md5" onkeydown="if(event.keyCode==13) {abc()};" autofocus>
+                <button type="submit" onclick="abc(1);">轉換</button>
+                <input type="file" name="file" id="file" onchange="abc(3)">
+                <font size="3">(文件自动转换)</font></br>
+                <input type="text" id="opt" placeholder="結果">
+                </font>
+            </div>
+    </body>
+    <script>
+      abc(2);
+    </script>
+</html>
