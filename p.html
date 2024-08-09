@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-compatible" content="IE=edge">
+        <title>Xbork</title>
+        <link rel="shortcut icon" href="fav.ico" type="image/x-icon">
+        <style>
+            *{
+                margin: 0;
+                padding: 0;
+                text-decoration: none;
+                list-style: none;
+            }
+            .header,.nav,.container,.footer{
+                float: left;
+                width : 100%
+                }
+            .header{
+                background: #ddd;
+                padding: 40px;
+                text-align: center;
+            }
+            .nav{
+                background: #666;
+            }
+            .nav a{
+                color: #fff;
+                padding: 10px,20px;
+                display: inline-block;
+            }
+            .nav a:hover{
+                background: #bbb;
+                color:#000
+            }
+            .box {
+            }
+            
+            @font-face {
+                font-family: "Bitstream Vera Serif Bold";
+                src: url("http://ftp.ktug.org/KTUG/hcr-lvt/HANDotumB-LVT.ttf");
+            }
+            body {
+                font-family: "Bitstream Vera Serif Bold", serif;
+            }
+        </style>
+        <script src="js/base64.min.js">//md5</script>
+        <script>
+            function clickbk(){
+                var mt=document.getElementById("mt")
+                mt.style.display="none";
+                var mr=document.getElementById("mr")
+                mr.style.display="block";
+            }
+            function clicked(){
+                var mt=document.getElementById("mt")
+                mt.style.display="block";
+                var mr=document.getElementById("mr")
+                mr.style.display="none";
+            }
+            function abc(x,ay) {
+              inp=document.getElementById("ipc");
+              opt=document.getElementById("opt");
+              spit=location.href.split("?")
+              if (x=="2") {
+                txt=spit[1].replace("\\\\","\\").replace("\\m","?")
+                inp.value=txt
+                if (ay=="1"||spit[spit.length-1]=="1") {
+                    opt.value=Number(txt).toString(16);
+                } else {
+                    opt.value=parseInt(txt, 16).toString();
+                }
+              } else {
+                txt=inp.value.toString();
+                location.href = spit[0]+"?"+inp.value.replace("\\","\\\\").replace("?","\\m")+"?"+ay
+              }
+            }
+            function tmp() {
+                inp=document.getElementById("ipc");
+                opt=document.getElementById("opt");
+                inp.value=opt.value
+            }
+            function dmt() {
+                inp=document.getElementById("ipc").value="";
+            }
+            function int2Hex (num = 0) {
+                if (num === 0) {
+                    return '0'
+                }
+                const HEXS = '0123456789abcdef'
+                let hex
+                while (num) {
+                    hex = HEXS.charAt(num % 16) + hex
+                    num = Math.floor(num / 16)
+                }
+                return hex
+            }
+        </script>
+    </head>
+    <body>
+        <script src="js/jquery.min.js"></script>
+    <script >
+    var a_idx=0;
+    jQuery(document).ready(function($){
+      addTips = function(e){
+        var a= new Array("");
+        var i=$("<span />").text(a[a_idx]);
+        a_idx=(a_idx+1)%a.length;
+        var x=e.pageX,y=e.pageY;
+        i.css({
+          "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+          "top":y-20,
+          "left":x,
+          "position":"absolute",
+          "font-weight":"bold",
+          "color":"#ff6651"
+        });
+ 
+        $("body").append(i);
+        i.animate({"top": y-180,"opacity":0},1500,function(){i.remove()})
+        return false;
+      }
+      //绑定鼠标左键
+      //$("body").click(addTips);
+      //绑定鼠标左键
+      //$("body").bind("contextmenu",addTips)
+  });
+    </script>
+    <script>
+      function o(w,v,i){
+          return w.getAttribute(v)||i
+      }
+      function j(i){
+          return document.getElementsByTagName(i)
+      }
+      function l(){
+          var i=j("script"),w=i.length,v=i[w-1];
+          return {l:w,z:o(v,"zIndex",-1),o:o(v,"opacity",0.5),c:o(v,"color","0,0,0"),n:o(v,"count",99)}
+      }
+      function k(){
+          r=u.width=window.innerWidth||document.documentElement.clientWidth||document.body.clientWidth,
+          n=u.height=window.innerHeight||document.documentElement.clientHeight||document.body.clientHeight
+      }
+      function b(){
+          e.clearRect(0,0,r,n);
+          var w=[f].concat(t);
+          var x,v,A,B,z,y;
+          t.forEach(function(i){
+              i.x+=i.xa,
+              i.y+=i.ya,
+              i.xa*=i.x>r||i.x<0?-1:1,
+              i.ya*=i.y>n||i.y<0?-1:1,
+              e.fillRect(i.x-0.5,i.y-0.5,1,1);
+              for(v=0;v<w.length;v++){
+                  x=w[v];
+                  if(i!==x&&null!==x.x&&null!==x.y){
+                      B=i.x-x.x,z=i.y-x.y,y=B*B+z*z;
+                      y<x.max&&(x===f&&y>=x.max/2&&(i.x-=0.03*B,i.y-=0.03*z),A=(x.max-y)/x.max,e.beginPath(),e.lineWidth=A/2,e.strokeStyle="rgba("+s.c+","+(A+0.2)+")",e.moveTo(i.x,i.y),e.lineTo(x.x,x.y),e.stroke())
+                  }
+              }
+              w.splice(w.indexOf(i),1)
+          }),m(b)
+      }
+      var u=document.createElement("canvas"),s=l(),c="c_n"+s.l,e=u.getContext("2d"),r,n,
+      m=window.requestAnimationFrame||window.webkitRequestAnimationFrame||window.mozRequestAnimationFrame||window.oRequestAnimationFrame||window.msRequestAnimationFrame||function(i){
+          window.setTimeout(i,1000/45)
+      },
+      a=Math.random,f={x:null,y:null,max:20000};
+      u.className="particle_canvas";
+      var browserName = navigator.userAgent.toLowerCase();
+      if (/msie/i.test(browserName) && !/opera/.test(browserName)) {
+          u.className += ' ie10_gte';
+      };
+      u.id=c;
+      u.style.cssText="position:fixed;top:0;left:0;z-index:"+s.z+";opacity:"+s.o;
+      j("body")[0].appendChild(u);
+      k(),window.onresize=k;
+      window.onmousemove=function(i){
+          i=i||window.event,
+          f.x=i.clientX,
+          f.y=i.clientY
+      },
+      window.onmouseout=function(){
+          f.x=null,
+          f.y=null
+      };
+      for(var t=[],p=0;s.n>p;p++){
+          var h=a()*r,
+          g=a()*n,
+          q=2*a()-1,
+          d=2*a()-1;
+          t.push({x:h,y:g,xa:q,ya:d,max:6000})
+      }
+      setTimeout(function(){b()},100)
+    </script>
+    <style>
+  .github-corner:hover .octo-arm {
+    animation: octocat-wave 560ms ease-in-out
+  }
+  @keyframes octocat-wave {
+    0%, 100% {
+      transform: rotate(0)
+    }
+    20%, 60% {
+      transform: rotate(-25deg)
+    }
+    40%, 80% {
+      transform: rotate(10deg)
+    }
+  }
+  @media (max-width:500px) {
+    .github-corner:hover .octo-arm {
+      animation: none
+    }
+    .github-corner .octo-arm {
+      animation: octocat-wave 560ms ease-in-out
+    }
+  }
+</style>
+
+
+
+            <div class="main">
+                <div class="header">
+                    <font size="20" color="#000">
+                        <a href="http://0h.fit">
+                            <h1>Xbork</h1>
+                        </a>
+                    </font>
+                </div>
+                <B><font size="10">
+                  进制转换
+                </font></br></B>
+                <font size="5">
+                    &emsp;<textarea cols="100" rows="10" id="ipc" placeholder="輸入内容" autofocus></textarea>
+                <button type="submit" onclick="abc(1,1);" style="width: 75px; height: 45px;">dec2hex</button>
+                <button type="submit" onclick="abc(1,2);" style="width: 75px; height: 45px;">hex2dec</button>
+                <button type="submit" onclick="dmt(1,2);" style="width: 75px; height: 45px;">清空</button><br>
+                &emsp;<textarea cols="100" rows="10" id="opt" placeholder="結果"></textarea>
+                <button type="submit" onclick="tmp(1,2);" style="width: 75px; height: 75px;">&emsp;&emsp;⬆&emsp;&emsp;</button>
+                </font>
+            </div>
+    </body>
+    <script>
+      abc(2);
+    </script>
+</html>
